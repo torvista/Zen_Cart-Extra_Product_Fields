@@ -8,7 +8,7 @@ declare(strict_types=1);
  */
 class zcObserverPluginExtraProductFields extends base
 {
- public array $extra_product_fields;
+ public $extra_product_fields;
     public function __construct()
     {
         //////////////////////////////////
