@@ -1,4 +1,5 @@
 # Zen Cart - Extra Product Fields
+
 ## Compatible: Zen Cart 1.57 / php 8.1
 
 This is an Admin Observer which adds extra product fields to the database and the corresponding fields in the admin Product Edit page.
@@ -24,15 +25,32 @@ $this->install();
 to prevent these messages.
 8. Edit a product to check the new fields are displayed and entries are saved on Update.
 
+## Structured Data
+If you are using the Structured Data Plugin from here:
+https://github.com/torvista/Zen_Cart-Structured_Data
+
+the Google Product Category field in the products table was originally named 
+'google_product_category'
+instead of
+'products_google_product_category'
+So you may get an error in the admin product edit page related to that. If so, rename the field:
+
+ALTER TABLE products CHANGE google_product_category products_google_product_category VARCHAR(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '';
+
+## Support
+Report issues here:
+
+https://github.com/torvista/Zen_Cart-Extra_Product_Fields
+
 ## Uninstall
 Remove the observer and language file(s).
 Use the sql in the Admin SQL patch tool or phpMyAdmin. Obviously modify this to suit your modifications.
 
-        /*uninstall sql
+
         ALTER TABLE `products` DROP `products_ean;
         ALTER TABLE `products` DROP `products_google_product_category;
         ALTER TABLE `products` DROP `products_mpn;
-        */
+
 
 ## Todo (by others)
 Add support for products that use a plugin for attribute stock control: the attributes should have these custom fields, not just the base product.
