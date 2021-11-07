@@ -1,28 +1,29 @@
 <?php
+declare(strict_types=1);
 //Plugin Extra Product Fields
 //https://github.com/torvista/Zen_Cart-Extra_Product_Fields
-declare(strict_types=1);
 
 /**
  * Class zcObserverPluginExtraProductFields
  */
 class zcObserverPluginExtraProductFields extends base
 {
+ public array $extra_product_fields;
     public function __construct()
     {
         //////////////////////////////////
-        //products_ean	varchar(13)	utf8mb4_unicode_520_ci
-        //products_google_product_category	varchar(6)	utf8mb4_unicode_520_ciop
-        //products_mpn varchar(20)	utf8mb4_unicode_520_ci
-
-        $this->extra_product_fields = [];
+        //products_ean	varchar(13)
+        //products_google_product_category	varchar(6)
+        //products_mpn varchar(20)
         $this->extra_product_fields[] = ['name' => 'ean', 'varchar' => 13];
         $this->extra_product_fields[] = ['name' => 'google_product_category', 'varchar' => 6];
         $this->extra_product_fields[] = ['name' => 'mpn', 'varchar' => 20];
-        //ADD MORE FIELDS HERE. Also create corresponding language defines for the field label and placeholder
+        //ADD MORE FIELDS HERE. Note that only type varchar can be auto-added...if you want another type you'll have to code it or add it manually.
+        //You also need to create the corresponding language defines for the field label and placeholder.
 
         //$this->install();//uncomment to install new fields, comment out for normal use
-        /////////////////////////////////
+        
+		/////////////////////////////////
 
         $this->attach($this, [
             'NOTIFY_ADMIN_PRODUCT_COLLECT_INFO_EXTRA_INPUTS', // product page: add field for discount
@@ -87,13 +88,12 @@ class zcObserverPluginExtraProductFields extends base
     private function install(): void
     {
         global $db, $messageStack, $sniffer;
-
         foreach ($this->extra_product_fields as $extra_product_field) {
             if ($sniffer->field_exists(TABLE_PRODUCTS, 'products_' . $extra_product_field['name'])) {
                 $messageStack->add('Plugin Extra Product Fields: field "products_' . $extra_product_field['name'] . '" already exists in table "' . TABLE_PRODUCTS . '"');
             } else {
-                $db->Execute("ALTER TABLE " . TABLE_PRODUCTS . " ADD `products_" . $extra_product_field->fields['name'] . "` VARCHAR(" . $extra_product_field['varchar']
-                    . ") CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NULL DEFAULT");
+                $db->Execute("ALTER TABLE " . TABLE_PRODUCTS . " ADD `products_" . $extra_product_field['name'] . "` VARCHAR(" . $extra_product_field['varchar']
+                    . ")");
                 $messageStack->add('Plugin Extra Product Fields: field "products_' . $extra_product_field['name'] . ' added to table "' . TABLE_PRODUCTS . '".', 'success');
             }
         }
