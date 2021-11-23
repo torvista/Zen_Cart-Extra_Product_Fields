@@ -8,7 +8,8 @@ declare(strict_types=1);
  */
 class zcObserverPluginExtraProductFields extends base
 {
- public $extra_product_fields;
+    public $extra_product_fields;
+
     public function __construct()
     {
         //////////////////////////////////
@@ -22,8 +23,8 @@ class zcObserverPluginExtraProductFields extends base
         //You also need to create the corresponding language defines for the field label and placeholder.
 
         //$this->install();//uncomment to install new fields, comment out for normal use
-        
-		/////////////////////////////////
+
+        /////////////////////////////////
 
         $this->attach($this, [
             'NOTIFY_ADMIN_PRODUCT_COLLECT_INFO_EXTRA_INPUTS', // product page: add field for discount
@@ -42,10 +43,11 @@ class zcObserverPluginExtraProductFields extends base
     {
         global $db;
         foreach ($this->extra_product_fields as $extra_product_field) {
-            $sql = "SELECT products_" . $extra_product_field['name'] . " FROM " . TABLE_PRODUCTS . " WHERE products_id = :productsId";
-            $sql = $db->bindVars($sql, ':productsId', $_GET['pID'], 'integer');//GET used, as pInfo does not have products_id set when Back is used from Preview page
-            $result = $db->Execute($sql);
-
+            if (!empty($_GET['pID'])) { // GET used, as pInfo $p1['products_id'] is empty on a new product created and when Back is used from Preview page.
+                $sql = "SELECT products_" . $extra_product_field['name'] . " FROM " . TABLE_PRODUCTS . " WHERE products_id = :productsId";
+                $sql = $db->bindVars($sql, ':productsId', $_GET['pID'], 'integer');
+                $result = $db->Execute($sql);
+            }
             //for label only
             $text = constant('PLUGIN_EXTRA_PRODUCT_FIELDS_LABEL_' . strtoupper($extra_product_field['name']));
             $addl_class = null; //as test is isset, not empty
@@ -53,7 +55,7 @@ class zcObserverPluginExtraProductFields extends base
             $field_name = 'products_' . $extra_product_field['name'];
 
             $placeholder = constant('PLUGIN_EXTRA_PRODUCT_FIELDS_PLACEHOLDER_' . strtoupper($extra_product_field['name']));
-            $input = zen_draw_input_field($field_name, $result->fields[$field_name],
+            $input = zen_draw_input_field($field_name, (empty($result->fields[$field_name]) ? '' : $result->fields[$field_name]),
                 ' class="form-control"
                 id="' . $field_name . '"' .
                 ' maxlength="' . $extra_product_field['varchar'] . '"' .
