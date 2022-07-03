@@ -8,7 +8,7 @@ declare(strict_types=1);
  */
 class zcObserverPluginExtraProductFields extends base
 {
-    public $extra_product_fields;
+    public array $extra_product_fields;
 
     public function __construct()
     {
@@ -54,8 +54,15 @@ class zcObserverPluginExtraProductFields extends base
             $parms = null;
             $field_name = 'products_' . $extra_product_field['name'];
 
+            if (!empty($_POST[$field_name])) {//Preview->Back button was used: use the new value
+                $fieldData = $_POST[$field_name];
+            } elseif(!empty($result->fields[$field_name])){//use value from database
+                $fieldData = $result->fields[$field_name];
+            } else {
+                $fieldData = '';
+            }
             $placeholder = constant('PLUGIN_EXTRA_PRODUCT_FIELDS_PLACEHOLDER_' . strtoupper($extra_product_field['name']));
-            $input = zen_draw_input_field($field_name, (empty($result->fields[$field_name]) ? '' : $result->fields[$field_name]),
+            $input = zen_draw_input_field($field_name, zen_output_string_protected($fieldData),
                 ' class="form-control"
                 id="' . $field_name . '"' .
                 ' maxlength="' . $extra_product_field['varchar'] . '"' .

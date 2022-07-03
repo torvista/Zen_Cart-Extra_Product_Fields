@@ -1,12 +1,12 @@
 # Zen Cart - Extra Product Fields
 
-## Compatible: Zen Cart 1.57 / php 8.1
+## Compatible: Zen Cart 1.57 / php 7.4-8.1
 
 This is an Admin Observer which adds extra product fields to the database and the corresponding fields in the admin Product Edit page.
 
 The observer installs:
-EAN, Google Product Category, MPN fields ino the database.
-They are included as examples...if they do not suit your purpose, it is easy to modify them as required and do repeat testing on your developement server FIRST.
+EAN, Google Product Category, MPN fields into the database.
+They are included as examples...if they do not suit your purpose, it is easy to modify them as required and do repeat testing on your development server FIRST.
 
 Look at the first section of the observer and do some educated guessing. Since you are testing on a development server, no harm can be done...
 
@@ -56,4 +56,4 @@ Use the sql in the Admin SQL patch tool or phpMyAdmin. Obviously modify this to 
 Add support for products that use a plugin for attribute stock control: the attributes should have these custom fields, not just the base product.
 
 ### Changelog
-7/11/2021: Initial effort.
+See the GitHub commits.
