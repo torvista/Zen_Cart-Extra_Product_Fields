@@ -28,6 +28,19 @@ $this->install();
 to prevent these messages.
 8. Edit a product to check the new fields are displayed and entries are saved on Update.
 
+### Displaying fields on the Storefront
+This plugin shows how to add two fields to the products table and allow those fields to display/be editable in the Admin->Product Edit page.
+
+These specific fields are maybe not required to be displayed on the storefront, but I've included examples in  
+Zen_Cart-Extra_Product_Fields\files\includes\
+
+which you can compare to vanilla files to work out how to display your extra fields.
+
+But, in short, your fields will be automatically included in the object "$product_info" and can be accessed as
+
+        $product_info->fields['your_custom_field']
+
+
 ## Structured Data
 If you are using the Structured Data Plugin from here:
 https://github.com/torvista/Zen_Cart-Structured_Data
@@ -49,10 +62,8 @@ https://github.com/torvista/Zen_Cart-Extra_Product_Fields
 Remove the observer and language file(s).
 Use the sql in the Admin SQL patch tool or phpMyAdmin. Obviously modify this to suit your modifications.
 
-
         ALTER TABLE `products` DROP `products_gtin;
         ALTER TABLE `products` DROP `products_google_product_category;
-
 
 ## Extra fields (GTIN, MPN, GPC) for POSM
 Not included but I've done it. If you want this, request it in the GitHub Issues.
