@@ -2,8 +2,12 @@
 
 This is an Admin Observer which adds extra product fields to the database and the corresponding fields in the Admin Product Edit page.
 
+This branch has custom code to handle Numinix extra product fields using a custom notifier in an override product/collect_info.php to display those fields after the shipping dimensions.
+
+The storefront code has not been modified for these fields. 
+
 ## Compatibility
-It should work from Zen Cart 157 onwards and is in use with the Zen Cart development branch (currently 2.2.0) and php 8.4.
+It should work from Zen Cart 157 onwards and is in use with the Zen Cart development branch (currently 2.2.0) and php 8.5.
 
 ## Installation
 Out of the box, the observer installs:
@@ -69,7 +73,7 @@ Use the sql in the Admin SQL patch tool or phpMyAdmin. Obviously modify this to 
 Not included but I've done it. If you want this, request it in the GitHub Issues.
 
 ### Changelog
-Last update 16th March 2025.
+Last update this branch 18th January 2026.
 
 See the GitHub commits.
 
