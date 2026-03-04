@@ -1,3 +1,4 @@
+### 2026 01: the npf branch has code for Numinix Product Fields, developed for a custom client...and has been revised in general...so use that!
 # Zen Cart - Extra Product Fields
 
 This is an Admin Observer which adds extra product fields to the database and the corresponding fields in the Admin Product Edit page.
